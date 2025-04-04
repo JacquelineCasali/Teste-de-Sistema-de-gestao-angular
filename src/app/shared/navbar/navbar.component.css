@@ -1,0 +1,50 @@
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #007bff;
+    padding: 12px 20px;
+    color: white;
+  }
+  
+  .logo {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+  }
+  
+  ul li {
+    display: inline;
+  }
+  
+  ul li a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    padding: 8px 12px;
+    transition: background 0.3s;
+  }
+  
+  ul li a:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+  }
+  
+  @media (max-width: 600px) {
+    nav {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    ul {
+      flex-direction: column;
+      gap: 10px;
+      text-align: center;
+      padding: 10px 0;
+    }
+  }

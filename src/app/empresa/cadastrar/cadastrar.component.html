@@ -1,0 +1,24 @@
+<h2>Cadastrar Empresa</h2>
+<div *ngIf="mensagemErro" class="erro">
+    {{ mensagemErro }}
+  </div>
+
+<form (ngSubmit)="cadastrar()">
+  <label for="cnpj">CNPJ:</label>
+  <input id="cnpj" type="text" [(ngModel)]="empresa.cnpj" name="cnpj" required />
+
+  <label for="nomeFantasia">Nome Fantasia:</label>
+  <input id="nomeFantasia" type="text" [(ngModel)]="empresa.nomeFantasia" name="nomeFantasia" required />
+
+  <label for="cep">CEP:</label>
+  <input id="cep" type="text" [(ngModel)]="empresa.cep" name="cep" required />
+
+  <label for="fornecedores">Fornecedores:</label>
+  <select id="fornecedores" [(ngModel)]="empresa.fornecedorIds" name="fornecedorIds" multiple>
+    <option *ngFor="let fornecedor of fornecedores" [value]="fornecedor.id">
+      {{ fornecedor.nome }}
+    </option>
+  </select>
+
+  <button type="submit">📌 Cadastrar</button>
+</form>
