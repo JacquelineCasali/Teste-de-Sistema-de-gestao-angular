@@ -1,0 +1,27 @@
+<h2>Cadastrar Fornecedor</h2>
+
+<form (ngSubmit)="cadastrar()">
+  <label>CNPJ/CPF:</label>
+  <input [(ngModel)]="fornecedor.cnpjCpf" name="cnpjCpf" required />
+
+  <label>Nome:</label>
+  <input [(ngModel)]="fornecedor.nome" name="nome" required />
+
+  <label>E-mail:</label>
+  <input [(ngModel)]="fornecedor.email" name="email" required type="email" />
+
+  <label>CEP:</label>
+  <input [(ngModel)]="fornecedor.cep" name="cep" required />
+
+  <label>RG:</label>
+  <input [(ngModel)]="fornecedor.rg" name="rg" />
+
+  <label>Data de Nascimento:</label>
+  <input [(ngModel)]="fornecedor.dataNascimento" name="dataNascimento" type="date" />
+
+  <button type="submit">💾 Salvar</button>
+ 
+  <div *ngIf="erro" class="erro">
+    {{ erro }}
+  </div>
+</form>

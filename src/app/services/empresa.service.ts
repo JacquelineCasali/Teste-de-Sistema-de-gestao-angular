@@ -10,6 +10,10 @@ export class EmpresaService {
   private fornecedorUrl = 'http://localhost:8080/fornecedor';
   constructor(private http: HttpClient) {}
 
+  listar(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl);
+  }
+
   getEmpresas(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl);
   }
@@ -18,6 +22,9 @@ export class EmpresaService {
   }
  
 
+  buscarPorId(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/${id}`);
+  }
   criarEmpresa(empresa: any): Observable<any> {
     return this.http.post<any>(this.apiUrl, empresa);
   }

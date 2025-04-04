@@ -1,10 +1,17 @@
-<h2>Empresas</h2>
+<div class="topo-titulo">
+    <h2>Empresas</h2>
+    <button class="cadastrar" (click)="cadastrar()">➕ Cadastrar Empresa</button>
+</div>
+
+
+
 <table>
   <tr>
     <th>ID</th>
     <th>CNPJ</th>
     <th>Nome Fantasia</th>
     <th>CEP</th>
+    <th>Fornecedores</th>
     <th>Ações</th>
   </tr>
   <tr *ngFor="let empresa of empresas">
@@ -13,6 +20,18 @@
     <td>{{ empresa.nomeFantasia }}</td>
     <td>{{ empresa.cep }}</td>
     <td>
+        <ul *ngIf="empresa.fornecedores.length > 0; else semFornecedores">
+          <li 
+          style=" list-style: none"
+          *ngFor="let fornecedor of empresa.fornecedores">
+            <a [routerLink]="['/fornecedores/editar', fornecedor.id]">{{ fornecedor.nome }}</a>
+          </li>
+        </ul>
+        <ng-template #semFornecedores>
+          <span>Sem fornecedores. <a [routerLink]="['/fornecedores/cadastrar']">Cadastrar fornecedor</a></span>
+        </ng-template>
+      </td>
+      <td>
         <button class="btn"
         
         (click)="editar(empresa)">✏️ Editar</button>

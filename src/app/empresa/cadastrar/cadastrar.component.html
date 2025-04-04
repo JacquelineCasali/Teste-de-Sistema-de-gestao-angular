@@ -1,24 +1,23 @@
 <h2>Cadastrar Empresa</h2>
-<div *ngIf="mensagemErro" class="erro">
-    {{ mensagemErro }}
-  </div>
-
 <form (ngSubmit)="cadastrar()">
-  <label for="cnpj">CNPJ:</label>
-  <input id="cnpj" type="text" [(ngModel)]="empresa.cnpj" name="cnpj" required />
-
-  <label for="nomeFantasia">Nome Fantasia:</label>
-  <input id="nomeFantasia" type="text" [(ngModel)]="empresa.nomeFantasia" name="nomeFantasia" required />
-
-  <label for="cep">CEP:</label>
-  <input id="cep" type="text" [(ngModel)]="empresa.cep" name="cep" required />
-
-  <label for="fornecedores">Fornecedores:</label>
-  <select id="fornecedores" [(ngModel)]="empresa.fornecedorIds" name="fornecedorIds" multiple>
-    <option *ngFor="let fornecedor of fornecedores" [value]="fornecedor.id">
+    <label>CNPJ:</label>
+    <input type="text" [(ngModel)]="empresa.cnpj" name="cnpj" required />
+  
+    <label>Nome Fantasia:</label>
+    <input type="text" [(ngModel)]="empresa.nomeFantasia" name="nomeFantasia" required />
+  
+    <label>CEP:</label>
+    <input type="text" [(ngModel)]="empresa.cep" name="cep" required />
+  
+    <label>Fornecedores:</label>
+    <div *ngFor="let fornecedor of fornecedores">
+      <input type="checkbox" [value]="fornecedor.id" (change)="toggleFornecedor(fornecedor.id, $event)" />
       {{ fornecedor.nome }}
-    </option>
-  </select>
-
-  <button type="submit">📌 Cadastrar</button>
+    </div>
+  
+    <p class="erro" *ngIf="mensagemErro">{{ mensagemErro }}</p>
+  
+    <button type="submit">Salvar</button>
+  
+    <button type="button" class="voltar" (click)="voltar()">🔙 Voltar</button>
 </form>

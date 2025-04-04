@@ -1,11 +1,20 @@
+.topo-titulo {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  
 table {
-    width: 100%;
+    width: 90%;
     border-collapse: collapse;
     margin-top: 20px;
     background: #fff;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+ margin-left: 60px;
+
   }
   
   /* Estiliza o cabeçalho da tabela */

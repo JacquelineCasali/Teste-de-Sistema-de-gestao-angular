@@ -1,0 +1,45 @@
+
+<div class="topo-titulo">
+    <h2>Fornecedores</h2>
+    <button class="cadastrar" (click)="cadastrar()">➕ Cadastrar Empresa</button>
+</div>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nome</th>
+      <th>CPF/CNPJ</th>
+      <th>Email</th>
+      <th>Cep</th>
+      <th>rg</th>
+      <th>Data Nascimento</th>
+      <th>Empresa</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let fornecedor of fornecedores">
+      <td>{{ fornecedor.id }}</td>
+      <td>{{ fornecedor.nome }}</td>
+      <td>{{ fornecedor.cpfCnpj }}</td>
+      <td>{{ fornecedor.email }}</td>
+      <td>{{ fornecedor.cep }}</td>
+      <td>{{ fornecedor.rg }}</td>
+      <td>{{ fornecedor.dataNascimento }}</td>
+      <td>
+        <ul *ngIf="fornecedor.empresa?.length > 0; else semEmpresas">
+          <li *ngFor="let empresa of fornecedor.empresa">
+            {{ empresa.nomeFantasia }}
+          </li>
+        </ul>
+        <ng-template #semEmpresas>
+          <span>Sem empresas associadas</span>
+        </ng-template>
+      </td>
+      <td>
+        <button (click)="editar(fornecedor)">✏️ Editar</button>
+        <button (click)="deletar(fornecedor.id)">🗑️ Remover</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
