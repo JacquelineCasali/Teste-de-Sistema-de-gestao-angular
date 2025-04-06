@@ -1,39 +1,39 @@
 form {
-    display: flex;
-    flex-direction: column;
-    width: 300px;
-    margin: auto;
-  }
-  
-  label {
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
-  input {
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .erro {
-    color: red;
-    font-size: 14px;
-  }
-  
-  button {
-    padding: 10px;
-    margin-top: 10px;
-    border: none;
-    color: white;
-    cursor: pointer;
-  }
-  
-  button[type="submit"] {
-    background-color: #28a745;
-  }
-  
-  button.voltar {
-    background-color: #6c757d;
-  }
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  margin: auto;
+}
+
+label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input {
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.erro {
+  color: red;
+  font-size: 14px;
+}
+
+button {
+  padding: 10px;
+  margin-top: 10px;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+button[type="submit"] {
+  background-color: #28a745;
+}
+
+button.voltar {
+  background-color: #6c757d;
+}

@@ -18,11 +18,11 @@ export class ListaComponent implements OnInit  {
  
 
   ngOnInit(): void {
-    this.empresaService.listar().subscribe({
+    this.empresaService.getEmpresas().subscribe({
       next: (data) => {
         this.empresas = data.map(emp => ({
           ...emp,
-          fornecedores: emp.fornecedor || [] // Garante que seja sempre um array
+          fornecedores: emp.fornecedores || [] // Garante que seja sempre um array
         }));
       },
       error: (err) => console.error('Erro ao buscar empresas:', err)

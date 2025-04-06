@@ -23,8 +23,8 @@
         <ul *ngIf="empresa.fornecedores.length > 0; else semFornecedores">
           <li 
           style=" list-style: none"
-          *ngFor="let fornecedor of empresa.fornecedores">
-            <a [routerLink]="['/fornecedores/editar', fornecedor.id]">{{ fornecedor.nome }}</a>
+          *ngFor="let fornecedores of empresa.fornecedores">
+            <a [routerLink]="['/fornecedores/editar', fornecedores.id]">{{ fornecedores.nome }}</a>
           </li>
         </ul>
         <ng-template #semFornecedores>

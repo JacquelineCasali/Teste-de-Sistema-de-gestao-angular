@@ -22,7 +22,7 @@ export class EmpresaService {
   }
  
 
-  buscarPorId(id: number): Observable<any> {
+  getEmpresaById(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${id}`);
   }
   criarEmpresa(empresa: any): Observable<any> {

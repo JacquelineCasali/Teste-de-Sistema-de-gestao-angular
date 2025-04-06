@@ -1,0 +1,60 @@
+<section style="padding: 20px 40px;">
+    <h2>Detalhes da Empresa</h2>
+    <div class="empresa-detalhes">
+    <p><strong>CNPJ:</strong> {{ empresa?.cnpj }}</p>
+    <p><strong>Nome Fantasia:</strong> {{ empresa?.nomeFantasia }}</p>
+    <p><strong>CEP:</strong> {{ empresa?.cep }}</p>
+    <p><strong>Estado:</strong> {{ empresa?.estado }}</p>
+  </div>
+  
+  <h3>Fornecedores</h3>
+  
+  <table *ngIf="empresa?.fornecedores?.length > 0; else nenhumFornecedor" class="tabela-fornecedores">
+    <thead>
+      <tr>
+      
+        <th>Nome</th>
+        <th>CPF/CNPJ</th>
+        <th>Email</th>
+        <th>RG</th>
+        <th>Data Nascimento</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let forn of empresa.fornecedores">
+     
+        <td>{{ forn.nome }}</td>
+        <td>{{ forn.cpfCnpj }}</td>
+        <td>{{ forn.email }}</td>
+        <td>{{ forn.rg }}</td>
+        <td>{{formatarData( forn.dataNascimento) }}</td>
+        <td>
+          <button class="btn visualizar" (click)="abrirModalFornecedor(forn)">👁️</button>
+          <button class="btn editar" (click)="editarFornecedor(forn)">✏️</button>
+          <button class="btn excluir" (click)="deletarFornecedor(forn.id)">🗑️</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <ng-template #nenhumFornecedor>
+    <p class="mensagem">Sem fornecedores associados.</p>
+  </ng-template>
+</section>
+
+  <div class="modal" *ngIf="modalAberto">
+    <div class="modal-conteudo">
+      <span class="fechar" (click)="fecharModal()">&times;</span>
+      <h3>Detalhes do Fornecedor</h3>
+      <p><strong>ID:</strong> {{ fornecedorSelecionado?.id }}</p>
+      <p><strong>Nome:</strong> {{ fornecedorSelecionado?.nome }}</p>
+      <p><strong>CPF/CNPJ:</strong> {{ fornecedorSelecionado?.cpfCnpj }}</p>
+      <p><strong>Email:</strong> {{ fornecedorSelecionado?.email }}</p>
+      <p><strong>CEP:</strong> {{ fornecedorSelecionado?.cep }}</p>
+      <p><strong>RG:</strong> {{ fornecedorSelecionado?.rg }}</p>
+      <p><strong>Data de Nascimento:</strong> {{formatarData(fornecedorSelecionado?.dataNascimento)  }}
+      
+      
+     </p>
+  

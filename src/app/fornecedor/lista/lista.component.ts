@@ -12,7 +12,8 @@ import { FornecedorService } from '../../services/fornecedor.service';
 })
 export class ListaFornecedorComponent implements OnInit {
   fornecedores: any[] = [];
-
+  fornecedorSelecionado: any = null;
+  modalAberto: boolean = false;
   constructor(private fornecedorService: FornecedorService, private router: Router) {}
 
   ngOnInit(): void {
@@ -27,6 +28,21 @@ export class ListaFornecedorComponent implements OnInit {
     this.router.navigate(['/fornecedores/editar', fornecedor.id]);
   }
 
+
+
+  visualizar(fornecedor: any) {
+    this.fornecedorSelecionado = fornecedor;
+    this.modalAberto = true;
+  }
+  
+  fecharModal() {
+    this.modalAberto = false;
+    this.fornecedorSelecionado = null;
+  }
+
+  formatarData(data: string): string {
+    return new Date(data).toLocaleDateString('pt-BR');
+  }
   deletar(id: number) {
     if (confirm('Tem certeza que deseja excluir?')) {
       this.fornecedorService.deletar(id).subscribe(() => {
