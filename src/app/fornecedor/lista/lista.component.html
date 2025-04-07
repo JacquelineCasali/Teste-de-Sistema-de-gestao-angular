@@ -3,9 +3,11 @@
   <h2>Fornecedores</h2>
   <button class="cadastrar" (click)="cadastrar()">➕ Cadastrar Fornecedor</button>
 </div>
+<div class="tabela-container">
 <table>
 <thead>
   <tr>
+    <th>id</th>
     <th>Nome</th>
     <th>CPF/CNPJ</th>
     <th>Email</th>
@@ -20,17 +22,21 @@
   </tr>
 </thead>
 <tbody>
-  <tr *ngFor="let fornecedor of fornecedores">
-   
+  <tr *ngFor="let fornecedor of fornecedoresPaginados">
+   <td>{{ fornecedor.id }}</td>
     <td>{{ fornecedor.nome }}</td>
-    <td>{{ fornecedor.cpfCnpj }}</td>
+    <td>{{ formatarCpfCnpj(fornecedor.cpfCnpj) }}</td>
     <td>{{ fornecedor.email }}</td>
-    <td>{{ fornecedor.cep }}</td>
+    <td>{{ formatarCep(fornecedor.cep) }}</td>
     <td>{{ fornecedor.cidade }}</td>
     <td>{{ fornecedor.estado }}</td>
-    <td>{{ fornecedor.rg }}</td>
-  
-    <td> {{ formatarData(fornecedor?.dataNascimento)  }}</td>
+    <td>
+      {{ ehPessoaJuridica(fornecedor.cpfCnpj) ? 'Pessoa Jurídica' :  formatarRg(fornecedor.rg)}}
+    </td>
+    <td>
+      {{ ehPessoaJuridica(fornecedor.cpfCnpj) ? 'Pessoa Jurídica' : formatarData(fornecedor?.dataNascimento) }}
+    </td>
+   
     <td>
       <ul *ngIf="fornecedor.empresas?.length > 0; else semEmpresas">
         <li *ngFor="let empresas of fornecedor.empresas">
@@ -52,7 +58,7 @@
   </tr>
 </tbody>
 </table>
-
+</div>
 <div class="modal" [class.show]="modalAberto">
   <div class="modal-conteudo">
     <span class="fechar" (click)="fecharModal()">&times;</span>
@@ -77,4 +83,16 @@
   <span>Sem empresas associadas</span>
 </ng-template>  
 </div>
+</div>
+
+<div class="pagination">
+  <button (click)="anteriorPagina()" [disabled]="paginaAtual === 1">Anterior</button>
+
+  <button *ngFor="let pagina of paginas" 
+          (click)="irParaPagina(pagina)" 
+          [class.ativa]="pagina === paginaAtual">
+    {{ pagina }}
+  </button>
+
+  <button (click)="proximaPagina()" [disabled]="paginaAtual === totalPaginas">Próxima</button>
 </div>

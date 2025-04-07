@@ -136,7 +136,17 @@ button {
 button:hover {
   background: #218838;
 }
+.rg-nascimento-container {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+}
 
+.rg-nascimento-container .input-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
 
 
 /* Loader (caso queira usar) */

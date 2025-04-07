@@ -50,12 +50,17 @@
 
   
 
-  <div *ngIf="isPessoaFisica()">
+  <div *ngIf="isPessoaFisica()"  class="rg-nascimento-container">
+    <div class="input-group">
     <label>RG:</label>
     <input [(ngModel)]="fornecedor.rg" name="rg" required mask="00.000.000-0" />
 
+   </div>
+   <div class="input-group">
     <label>Data de Nascimento:</label>
     <input [(ngModel)]="fornecedor.dataNascimento" name="dataNascimento" required type="date" />
+   </div>
+   
   </div>
 
 
@@ -65,7 +70,9 @@
 
   <div *ngFor="let emp of empresas" class="empresa-checkbox">
      <label >
-    <input type="checkbox"
+    <input
+   style="width: 20px;"
+    type="checkbox"
            [value]="emp.id"
            (change)="toggleEmpresa(emp.id, $event)" />
     {{ emp.cnpj }} ({{ emp.estado }})
