@@ -1,39 +1,199 @@
+/* Título centralizado */
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  color: #333;
+}
+
+/* Estilo geral do formulário */
 form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  max-width: 400px;
+  gap: 16px;
+  max-width: 500px;
+  margin: auto;
+  padding: 24px;
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', sans-serif;
 }
 
+/* Rótulos dos campos */
 label {
-  font-weight: bold;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: #444;
 }
 
-input {
-  padding: 6px;
+/* Inputs e selects */
+input, select {
+  padding: 10px;
+  border: 1.8px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Inputs focados */
+input:focus, select:focus {
+  border-color: #5b9bd5;
+  box-shadow: 0 0 0 2px rgba(91, 155, 213, 0.2);
+  outline: none;
+}
+
+/* Placeholder */
+input::placeholder {
+  color: #aaa;
+}
+
+/* Campos desabilitados */
+input:disabled {
+  background-color: #f2f2f2;
+  color: #888;
+  cursor: not-allowed;
+}
+
+/* Campo com dados preenchidos (como cidade/UF) */
+input.preenchido {
+  border-color: #4caf50;
+  background-color: #eafaf1;
+}
+
+/* Validação visual */
+input.ng-invalid.ng-touched {
+  border: 1.8px solid red;
+}
+
+input.ng-valid.ng-touched {
+  border: 1.8px solid green;
+}
+/* Link e seção de empresas */
+.link {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+  /* padding: 1rem; */
+}
+/* Estilo do link */
+.link a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.link a:hover {
+  text-decoration: underline;
+}
+
+.empresa-checkbox {
+  padding: 0.5rem;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+.empresa-checkbox label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+.empresa-checkbox input[type="checkbox"] {
+  accent-color: #1976d2; /* opcional: cor do checkbox no Chrome/Edge */
+  transform: scale(1.1);  /* opcional: aumenta visualmente o checkbox */
+}
+/* Caixa de erro */
+.erro {
+  background-color: #fdecea;
+  color: #d32f2f;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  margin-top: -8px;
 }
 
+.erro ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+/* Botão salvar */
 button {
-  margin-top: 10px;
-  padding: 6px;
+  padding: 12px;
   border: none;
-  border-radius: 4px;
-  background-color: #1976d2;
+  background: #28a745;
   color: white;
+  font-size: 1rem;
+  font-weight: bold;
   cursor: pointer;
+  border-radius: 6px;
+  transition: background 0.3s ease;
 }
 
 button:hover {
-  background-color: #125aa0;
+  background: #218838;
 }
 
-button.voltar {
-  background-color: #757575;
+
+
+/* Loader (caso queira usar) */
+.loader {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 3px solid #ccc;
+  border-top: 3px solid #5b9bd5;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-left: 8px;
+  vertical-align: middle;
 }
 
-.erro {
-  color: red;
-  margin-top: 10px;
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.cidade-uf-container {
+  display: flex;
+  gap: 1rem; /* espaço entre cidade e uf */
+  align-items: flex-end; 
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  /* flex: 1;  */
+}
+.input-group:first-child {
+  flex: 3; /* cidade */
+}
+
+.input-group:last-child {
+  flex: 1; /* uf */
+}
+
+
+/* Responsividade */
+@media (max-width: 600px) {
+  form {
+    padding: 16px;
+    width: 90%;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+  }
+
+  input, select, button {
+    font-size: 0.95rem;
+  }
+
+  .link {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }

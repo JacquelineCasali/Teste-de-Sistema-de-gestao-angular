@@ -6,12 +6,14 @@
 <table>
 <thead>
   <tr>
-    <th>ID</th>
     <th>Nome</th>
     <th>CPF/CNPJ</th>
     <th>Email</th>
     <th>Cep</th>
-    <th>rg</th>
+    <th>Cidade</th>
+    <th>Estado</th>
+ 
+    <th>Rg</th>
     <th>Data Nascimento</th>
     <th>Empresa</th>
     <th>Ações</th>
@@ -19,11 +21,13 @@
 </thead>
 <tbody>
   <tr *ngFor="let fornecedor of fornecedores">
-    <td>{{ fornecedor.id }}</td>
+   
     <td>{{ fornecedor.nome }}</td>
     <td>{{ fornecedor.cpfCnpj }}</td>
     <td>{{ fornecedor.email }}</td>
     <td>{{ fornecedor.cep }}</td>
+    <td>{{ fornecedor.cidade }}</td>
+    <td>{{ fornecedor.estado }}</td>
     <td>{{ fornecedor.rg }}</td>
   
     <td> {{ formatarData(fornecedor?.dataNascimento)  }}</td>

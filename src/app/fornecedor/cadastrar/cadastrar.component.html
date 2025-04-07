@@ -1,27 +1,89 @@
+
 <h2>Cadastrar Fornecedor</h2>
 
-<form (ngSubmit)="cadastrar()">
-  <label>CNPJ/CPF:</label>
-  <input [(ngModel)]="fornecedor.cnpjCpf" name="cnpjCpf" required />
+<form  #form="ngForm" (ngSubmit)="cadastrar()">
+  <label>CPF/CNPJ:</label>
+  <input [(ngModel)]="fornecedor.cpfCnpj" name="cpfCnpj"
+         required
+         (blur)="onCpfCnpjChange()"
+         [mask]="isPessoaFisica() ? '000.000.000-00' : '00.000.000/0000-00'"
+         [attr.placeholder]="isPessoaFisica() ? '000.000.000-00' : '00.000.000/0000-00'" />
+
+
+
+
+
 
   <label>Nome:</label>
-  <input [(ngModel)]="fornecedor.nome" name="nome" required />
+
+  <input type="text" name="nome" [(ngModel)]="fornecedor.nome" 
+  placeholder="Digite o nome da empresa"
+  required />
+  <div *ngIf="form.submitted && !fornecedor.nome" class="erro">
+    Nome é obrigatório.
+  </div>
+
 
   <label>E-mail:</label>
-  <input [(ngModel)]="fornecedor.email" name="email" required type="email" />
+  <input [(ngModel)]="fornecedor.email" name="email" 
+  placeholder="tests@test.com"
+  required type="email" />
 
   <label>CEP:</label>
-  <input [(ngModel)]="fornecedor.cep" name="cep" required />
+  <input [(ngModel)]="fornecedor.cep" 
+  mask="00000-000"
+  name="cep" (blur)="buscarEnderecoPorCep(fornecedor.cep)"
+  placeholder="00000-000" />
+  
+  <div *ngIf="cidadeUfVisivel" class="cidade-uf-container">
+    <div class="input-group">
+      <label>Cidade:</label>
+      <input [(ngModel)]="fornecedor.cidade" name="cidade" placeholder="Cidade" readonly />
+    </div>
+  
+    <div class="input-group">
+      <label>Estado:</label>
+      <input [(ngModel)]="fornecedor.uf" name="uf" placeholder="UF" readonly />
+    </div>
+  </div>
 
-  <label>RG:</label>
-  <input [(ngModel)]="fornecedor.rg" name="rg" />
 
-  <label>Data de Nascimento:</label>
-  <input [(ngModel)]="fornecedor.dataNascimento" name="dataNascimento" type="date" />
+  
+
+  <div *ngIf="isPessoaFisica()">
+    <label>RG:</label>
+    <input [(ngModel)]="fornecedor.rg" name="rg" required mask="00.000.000-0" />
+
+    <label>Data de Nascimento:</label>
+    <input [(ngModel)]="fornecedor.dataNascimento" name="dataNascimento" required type="date" />
+  </div>
+
+
+  <label>Associe uma Empresa:</label>
+<div class="link">
+
+
+  <div *ngFor="let emp of empresas" class="empresa-checkbox">
+     <label >
+    <input type="checkbox"
+           [value]="emp.id"
+           (change)="toggleEmpresa(emp.id, $event)" />
+    {{ emp.cnpj }} ({{ emp.estado }})
+  </label>
+
+</div>
+ 
+   
+      
+      </div>
+      <a [routerLink]="['/empresas/cadastrar']" >Cadastrar Nova Empresa</a>  
+    
 
   <button type="submit">💾 Salvar</button>
  
-  <div *ngIf="erro" class="erro">
-    {{ erro }}
+  <div *ngIf="mensagensErro.length" class="erro">
+    <ul>
+      <li *ngFor="let msg of mensagensErro">{{ msg }}</li>
+    </ul>
   </div>
 </form>
