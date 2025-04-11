@@ -29,8 +29,8 @@ export class EmpresaService {
     return this.http.post<any>(this.apiUrl, empresa);
   }
 
-  atualizarEmpresa(empresa: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${empresa.id}`, empresa);
+  atualizarEmpresa(id:number, empresa: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${id}`, empresa);
   }
 
   deletar(id: number): Observable<void> {

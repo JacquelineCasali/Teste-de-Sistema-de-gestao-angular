@@ -1,21 +1,45 @@
-<h2>Cadastrar Empresa</h2>
-<form (ngSubmit)="cadastrar()">
+<h2>{{ editando ? 'Editar Empresa' : 'Cadastrar Empresa' }}</h2>
+
+<form  #form="ngForm" (ngSubmit)="cadastrar()">
     <label>CNPJ:</label>
-    <input type="text" [(ngModel)]="empresa.cnpj" name="cnpj" required />
+    <input type="text"
+     [(ngModel)]="empresa.cnpj" name="cnpj" required />
   
     <label>Nome Fantasia:</label>
     <input type="text" [(ngModel)]="empresa.nomeFantasia" name="nomeFantasia" required />
   
     <label>CEP:</label>
-    <input type="text" [(ngModel)]="empresa.cep" name="cep" required />
+    <input type="text"
+     [(ngModel)]="empresa.cep" 
+     (blur)="buscarEnderecoPorCep(empresa.cep)"
+     name="cep"
+     placeholder="00000-000"
+      required />
   
-    <label>Fornecedores:</label>
-    <div *ngFor="let fornecedor of fornecedores">
+      <div *ngIf="cidadeUfVisivel" class="cidade-uf-container">
+        <div class="input-group">
+          <label>Cidade:</label>
+          <input [(ngModel)]="empresa.cidade" name="cidade" placeholder="Cidade" readonly />
+        </div>
+      
+        <div class="input-group">
+          <label>Estado:</label>
+          <input [(ngModel)]="empresa.uf" name="uf" placeholder="UF" readonly />
+        </div>
+      </div>
+    
+      <label>Associe um Fornecedor:</label>
+      <div class="link">
+    <div *ngFor="let fornecedor of fornecedores" class="empresa-checkbox">
+      <label  style="width: 20px;">
+     
       <input type="checkbox" [value]="fornecedor.id" (change)="toggleFornecedor(fornecedor.id, $event)" />
       {{ fornecedor.nome }}
+    </label>
     </div>
-  
-    <p class="erro" *ngIf="mensagemErro">{{ mensagemErro }}</p>
+  </div>
+  <a [routerLink]="['/fornecedor/cadastrar']" >Cadastrar Novo Fornecedor</a>  
+    <!-- <p class="erro" *ngIf="mensagemErro">{{ mensagemErro }}</p> -->
   
     <button type="submit">Salvar</button>
   
