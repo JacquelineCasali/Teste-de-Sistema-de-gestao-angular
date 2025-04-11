@@ -33,7 +33,7 @@ export class EmpresaService {
     return this.http.put<any>(`${this.apiUrl}/${empresa.id}`, empresa);
   }
 
-  excluirEmpresa(id: number): Observable<void> {
+  deletar(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 

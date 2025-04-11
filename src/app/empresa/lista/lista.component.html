@@ -1,43 +1,102 @@
 <div class="topo-titulo">
-    <h2>Empresas</h2>
-    <button class="cadastrar" (click)="cadastrar()">➕ Cadastrar Empresa</button>
+  <h2>Empresas</h2>
+  <input
+    type="text"
+    placeholder="Filtrar por nome ou CNPJ"
+    [(ngModel)]="filtro"
+    (input)="aplicarFiltro()"
+    name="filtro"
+  />
+  <button class="cadastrar" (click)="cadastrar()">➕ Cadastrar Empresa</button>
 </div>
 
+<div class="tabela-container">
+  <table *ngIf="empresasPaginadas.length > 0">
+    <thead>
+      <tr>
+        <th>Nome Fantasia</th>
+        <th>CNPJ</th>
+        <th>Cep</th>
+        <th>Cidade</th>
+        <th>Estado</th>
+        <th>Fornecedor</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let empresa of empresasPaginadas">
+        <td>{{ empresa.nomeFantasia }}</td>
+        <td>{{ formatarCnpj(empresa.cnpj) }}</td>
+        <td>{{ formatarCep(empresa.cep) }}</td>
+        <td>{{ empresa.cidade }}</td>
+        <td>{{ empresa.estado }}</td>
+        <td>
+          <ul
+            *ngIf="empresa.fornecedores.length > 0; else semFornecedores"
+            style="padding: 0; margin: 5px 0"
+          >
+            <li
+              *ngFor="let fornecedores  of empresa.fornecedores "
+              style="list-style-type: none; margin: 5px 0 0 0"
+            >
+              <a
+              (click)="abrirModalFornecedor(fornecedores)"
+                style="text-decoration: none; color: blue; cursor: pointer;"
+              >
+                {{ fornecedores.nome }}
+              </a>
+            </li>
+          </ul>
+          <a [routerLink]="['/fornecedores/cadastrar']">Cadastrar Fornecedores</a>
+          <ng-template #semFornecedores>
+            <span style="display: block; margin-bottom: 5px"
+              >Sem fornecedores associadas</span
+            >
+          </ng-template>
+        </td>
 
 
-<table>
-  <tr>
-    <th>ID</th>
-    <th>CNPJ</th>
-    <th>Nome Fantasia</th>
-    <th>CEP</th>
-    <th>Fornecedores</th>
-    <th>Ações</th>
-  </tr>
-  <tr *ngFor="let empresa of empresas">
-    <td>{{ empresa.id }}</td>
-    <td>{{ empresa.cnpj }}</td>
-    <td>{{ empresa.nomeFantasia }}</td>
-    <td>{{ empresa.cep }}</td>
-    <td>
-        <ul *ngIf="empresa.fornecedores.length > 0; else semFornecedores">
-          <li 
-          style=" list-style: none"
-          *ngFor="let fornecedores of empresa.fornecedores">
-            <a [routerLink]="['/fornecedores/editar', fornecedores.id]">{{ fornecedores.nome }}</a>
-          </li>
-        </ul>
-        <ng-template #semFornecedores>
-          <span>Sem fornecedores. <a [routerLink]="['/fornecedores/cadastrar']">Cadastrar fornecedor</a></span>
-        </ng-template>
-      </td>
-      <td>
-        <button class="btn"
-        
-        (click)="editar(empresa)">✏️ Editar</button>
-      <button 
-      class="btne"
-      (click)="excluir(empresa.id)">Excluir</button>
-    </td>
-  </tr>
-</table>
+
+
+
+        <td>
+          <button class="btn visualizar" (click)="visualizar(empresa)">👁️</button>
+          <button class="btn editar" (click)="editar(empresa)">✏️</button>
+          <button class="btn excluir" (click)="deletar(empresa)">🗑️</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf="empresasPaginadas.length === 0" class="sem-registros">
+    Nenhuma empresa encontrada.
+  </div>
+</div>
+
+<div *ngIf="empresasPaginadas.length > 0">
+  <div class="pagination">
+    <button (click)="anteriorPagina()" [disabled]="paginaAtual === 1">Anterior</button>
+
+    <button
+      *ngFor="let pagina of paginas"
+      (click)="irParaPagina(pagina)"
+      [class.ativa]="pagina === paginaAtual"
+    >
+      {{ pagina }}
+    </button>
+
+    <button (click)="proximaPagina()" [disabled]="paginaAtual === totalPaginas">Próxima</button>
+  </div>
+  <div class="modal" *ngIf="modalAberto">
+    <div class="modal-conteudo">
+      <span class="fechar" (click)="fecharModal()">&times;</span>
+      <h3>Detalhes do Fornecedor</h3>
+      <p><strong>Nome:</strong> {{ fornecedorSelecionado?.nome }}</p>
+      <p><strong>CPF/CNPJ:</strong> {{ fornecedorSelecionado?.cpfCnpj }}</p>
+      <p><strong>Email:</strong> {{ fornecedorSelecionado?.email }}</p>
+      <p><strong>CEP:</strong> {{ fornecedorSelecionado?.cep }}</p>
+      <p><strong>RG:</strong> {{ fornecedorSelecionado?.rg }}</p>
+      <p><strong>Data de Nascimento:</strong> {{ formatarData(fornecedorSelecionado?.dataNascimento) }}</p>
+    </div>
+  </div>
+</div>
+

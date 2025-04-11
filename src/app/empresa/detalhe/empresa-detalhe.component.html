@@ -1,14 +1,25 @@
-<section style="padding: 20px 40px;">
-    <h2>Detalhes da Empresa</h2>
-    <div class="empresa-detalhes">
-    <p><strong>CNPJ:</strong> {{ empresa?.cnpj }}</p>
-    <p><strong>Nome Fantasia:</strong> {{ empresa?.nomeFantasia }}</p>
-    <p><strong>CEP:</strong> {{ empresa?.cep }}</p>
-    <p><strong>Estado:</strong> {{ empresa?.estado }}</p>
+<div class="container-com-menu">
+
+  <!-- Menu lateral -->
+  <aside class="menu-detalhes-empresa">
+    <h3>🧾 Detalhes da Empresa</h3>
+    <p><strong>CNPJ:</strong><br> {{formatarCnpj(empresa?.cnpj || '' )  }}</p>
+    <p><strong>Nome Fantasia:</strong><br> {{ empresa?.nomeFantasia }}</p>
+    <p><strong>CEP:</strong><br> {{ formatarCep(empresa?.cep || '') }}</p>
+    <p><strong>Estado:</strong><br> {{ empresa?.estado }}</p>
+    <div class="acoes-empresa">
+      <button class="btn editar" (click)="editarEmpresa()">✏️ Editar</button>
+      <button class="cadastrar" (click)="cadastrar()">➕ Cadastrar</button>
+    </div>
+  </aside>
+
+  <section class="conteudo-principal">
+
+  <div class="cabecalho">
+    <h3>Fornecedores</h3>
+    <button class="btn voltar" (click)="voltar()">🔙 Voltar</button>
   </div>
-  
-  <h3>Fornecedores</h3>
-  
+ 
   <table *ngIf="empresa?.fornecedores?.length > 0; else nenhumFornecedor" class="tabela-fornecedores">
     <thead>
       <tr>
@@ -22,15 +33,20 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let forn of empresa.fornecedores">
+      <tr *ngFor="let forn of fornecedoresPaginados">
      
         <td>{{ forn.nome }}</td>
         <td>{{ forn.cpfCnpj }}</td>
         <td>{{ forn.email }}</td>
-        <td>{{ forn.rg }}</td>
+        <td>
+          {{
+            ehPessoaJuridica(forn.cpfCnpj)
+              ? "Pessoa Jurídica"
+              : formatarRg(forn.rg)
+          }}
+        </td>
         <td>{{formatarData( forn.dataNascimento) }}</td>
         <td>
-          <button class="btn visualizar" (click)="abrirModalFornecedor(forn)">👁️</button>
           <button class="btn editar" (click)="editarFornecedor(forn)">✏️</button>
           <button class="btn excluir" (click)="deletarFornecedor(forn.id)">🗑️</button>
         </td>
@@ -41,19 +57,12 @@
   <ng-template #nenhumFornecedor>
     <p class="mensagem">Sem fornecedores associados.</p>
   </ng-template>
+  <div class="paginacao" *ngIf="paginaTotal > 1">
+    <button (click)="paginaAtual > 1 && mudarPagina(paginaAtual - 1)">⬅️</button>
+    <span>Página {{ paginaAtual }} de {{ paginaTotal }}</span>
+    <button (click)="paginaAtual < paginaTotal && mudarPagina(paginaAtual + 1)">➡️</button>
+  </div>
 </section>
 
-  <div class="modal" *ngIf="modalAberto">
-    <div class="modal-conteudo">
-      <span class="fechar" (click)="fecharModal()">&times;</span>
-      <h3>Detalhes do Fornecedor</h3>
-      <p><strong>Nome:</strong> {{ fornecedorSelecionado?.nome }}</p>
-      <p><strong>CPF/CNPJ:</strong> {{ fornecedorSelecionado?.cpfCnpj }}</p>
-      <p><strong>Email:</strong> {{ fornecedorSelecionado?.email }}</p>
-      <p><strong>CEP:</strong> {{ fornecedorSelecionado?.cep }}</p>
-      <p><strong>RG:</strong> {{ fornecedorSelecionado?.rg }}</p>
-      <p><strong>Data de Nascimento:</strong> {{formatarData(fornecedorSelecionado?.dataNascimento)  }}
-      
-      
-     </p>
-  
+</div>
+
