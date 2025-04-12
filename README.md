@@ -6,7 +6,11 @@ Este projeto é uma aplicação Full-Stack desenvolvida utilizando Spring Boot n
 ## Video do Projeto 
 
 
-<video controls src="Gravação de Tela 2025-04-12 073808.mp4" title="Title"></video>
+
+https://github.com/user-attachments/assets/406c7a83-d9b3-4543-b9ba-952e7cd5b853
+
+
+
 
 ## 🚀 Tecnologias Utilizadas
 
