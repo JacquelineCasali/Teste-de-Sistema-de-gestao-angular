@@ -20,7 +20,7 @@ Este projeto é uma aplicação Full-Stack desenvolvida utilizando Spring Boot n
 
 - Angular (Framework front-end)
 - TypeScript
-- Bootstrap (Para estilização)
+- css
 
 ## ⚙️ Funcionalidades
 
