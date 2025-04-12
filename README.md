@@ -3,6 +3,11 @@
 Este projeto é uma aplicação Full-Stack desenvolvida utilizando Spring Boot no back-end e Angular no front-end. O sistema permite a gestão de empresas e fornecedores, garantindo regras de negócio como validação de CPF/CNPJ, restrição de idade para fornecedores pessoa física no Paraná e integração com API de CEP.
 
 
+## Video do Projeto 
+
+
+<video controls src="Gravação de Tela 2025-04-12 073808.mp4" title="Title"></video>
+
 ## 🚀 Tecnologias Utilizadas
 
 ## Backend:
