@@ -18,15 +18,34 @@ form {
   label {
     font-weight: bold;
     margin-bottom: 4px;
+    color: #444;
   }
   
   input, select {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
+    padding: 10px;
+    border: 1.8px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    width: 100%;
+    box-sizing: border-box;
   }
   
+/* Inputs focados */
+input:focus, select:focus {
+  border-color: #5b9bd5;
+  box-shadow: 0 0 0 2px rgba(91, 155, 213, 0.2);
+  outline: none;
+}
+/* Placeholder */
+input::placeholder {
+  color: #aaa;
+}
+
+input.preenchido {
+  border-color: #4caf50;
+  background-color: #eafaf1;
+}
   button {
     padding: 10px;
     border: none;
@@ -50,3 +69,80 @@ form {
     margin-bottom: 12px;
     border-radius: 5px;
   }
+  .cidade-uf-container {
+    display: flex;
+    gap: 1rem; /* espaço entre cidade e uf */
+    align-items: flex-end; 
+  }
+  
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    /* flex: 1;  */
+  }
+  .input-group:first-child {
+    flex: 3; /* cidade */
+  }
+  
+  .input-group:last-child {
+    flex: 1; /* uf */
+  }
+  .link {
+    display: grid;
+   	grid-template-columns: 1fr 1fr ;
+    gap: 10px;
+    align-items: center;
+    /* padding: 1rem; */
+  }
+  /* Estilo do link */
+  .link a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  
+  .link a:hover {
+    text-decoration: underline;
+  }
+  
+  .empresa-checkbox {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  .empresa-checkbox label {
+    display: flex;
+    align-items: center;
+    /* gap: 0.5rem; */
+    cursor: pointer;
+  }
+  .empresa-checkbox input[type="checkbox"] {
+    accent-color: #1976d2; /* opcional: cor do checkbox no Chrome/Edge */
+    transform: scale(1.1);  /* opcional: aumenta visualmente o checkbox */
+  }
+  /* Responsividade */
+@media (max-width: 600px) {
+  form {
+    padding: 16px;
+    width: 90%;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+  }
+
+  input, select, button {
+    font-size: 0.95rem;
+  }
+
+  .link {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+   
+  }
+  .empresa-checkbox {
+    width: 90%;
+  }
+}

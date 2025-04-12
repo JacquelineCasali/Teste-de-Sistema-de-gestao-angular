@@ -24,21 +24,31 @@
       
         <div class="input-group">
           <label>Estado:</label>
-          <input [(ngModel)]="empresa.uf" name="uf" placeholder="UF" readonly />
+          <input [(ngModel)]="empresa.uf"
+          id="uf"
+          name="uf" placeholder="UF" readonly />
         </div>
       </div>
     
       <label>Associe um Fornecedor:</label>
       <div class="link">
-    <div *ngFor="let fornecedor of fornecedores" class="empresa-checkbox">
-      <label  style="width: 20px;">
-     
-      <input type="checkbox" [value]="fornecedor.id" (change)="toggleFornecedor(fornecedor.id, $event)" />
-      {{ fornecedor.nome }}
-    </label>
-    </div>
-  </div>
-  <a [routerLink]="['/fornecedor/cadastrar']" >Cadastrar Novo Fornecedor</a>  
+      <div *ngFor="let fornecedor of fornecedores" class="empresa-checkbox">
+        <label  >
+          <input
+         style="width: 20px;"
+            type="checkbox"
+            [checked]="empresa.fornecedorIds.includes(fornecedor.id)"
+            [value]="fornecedor.id"
+            (change)="toggleFornecedor(fornecedor.id, $event)" />
+          <p style="margin: 0;">{{fornecedor.cpfCnpj}} </p>
+        </label>
+          <p style=" margin: 0 25px ;">
+            ({{ fornecedor.estado }})
+          </p> 
+      
+      </div>
+      </div>
+  <a [routerLink]="['/fornecedores/cadastrar']" >Cadastrar Novo Fornecedor</a>  
     <!-- <p class="erro" *ngIf="mensagemErro">{{ mensagemErro }}</p> -->
   
     <button type="submit">Salvar</button>

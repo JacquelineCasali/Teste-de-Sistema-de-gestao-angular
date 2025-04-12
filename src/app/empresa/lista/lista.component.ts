@@ -3,14 +3,15 @@ import { EmpresaService } from '../../services/empresa.service';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { capitalizarNome, formatarRg } from '../../shared/utils/utils';
 @Component({
   selector: 'app-lista',
   standalone: true,
-  imports: [CommonModule,RouterModule,FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './lista.component.html',
-  styleUrls: ['./lista.component.css']
+  styleUrls: ['./lista.component.css'],
 })
-export class ListaComponent implements OnInit  {
+export class ListaComponent implements OnInit {
   empresas: any[] = [];
   empresasFiltradas: any[] = [];
   empresasPaginadas: any[] = [];
@@ -23,31 +24,50 @@ export class ListaComponent implements OnInit  {
   modalAberto = false;
   constructor(private empresaService: EmpresaService, private router: Router) {}
 
- 
- 
-
   ngOnInit(): void {
-    this.empresaService.listar().subscribe(data => {
-      this.empresas = data.sort((a, b) => a.nomeFantasia.localeCompare(b.nomeFantasia));
-  
+    this.empresaService.listar().subscribe((data) => {
+      this.empresas = data.sort((a, b) =>
+        a.nomeFantasia.localeCompare(b.nomeFantasia)
+      );
+
       // Ordena os fornecedores de cada empresa
-      this.empresas.forEach(empresa => {
-        empresa.fornecedores.sort((a: { nome: string; }, b: { nome: any; }) => a.nome.localeCompare(b.nome));
+      this.empresas.forEach((empresa) => {
+        empresa.fornecedores.sort((a: { nome: string }, b: { nome: any }) =>
+          a.nome.localeCompare(b.nome)
+        );
       });
-  
+
       this.aplicarFiltro();
     });
   }
+
   aplicarFiltro(): void {
     const termo = this.filtro.toLowerCase().trim();
     const termoNumerico = this.filtro.replace(/\D/g, '');
-    this.empresasFiltradas = this.empresas.filter(e => {
+
+    this.empresasFiltradas = this.empresas.filter((e) => {
       const nome = (e.nomeFantasia || '').toLowerCase();
       const cnpj = (e.cnpj || '').replace(/\D/g, '');
-      return nome.includes(termo) || cnpj.includes(termoNumerico);
+
+      // Se não tiver filtro, retorna tudo
+      if (!termo) return true;
+
+      // Verifica se TODOS os termos do filtro estão no nome (busca por palavra)
+      const termoPalavras = termo.split(/\s+/);
+      const nomeMatch = termoPalavras.every((tp) => nome.includes(tp));
+
+      // Verifica se o CNPJ inclui os números do filtro
+      const cnpjMatch = termoNumerico && cnpj.includes(termoNumerico);
+
+      return nomeMatch || cnpjMatch;
     });
 
-    this.totalPaginas = Math.ceil(this.empresasFiltradas.length / this.itensPorPagina);
+    console.log('Filtro atual:', this.filtro);
+    console.log('Empresas filtradas:', this.empresasFiltradas.length);
+
+    this.totalPaginas = Math.ceil(
+      this.empresasFiltradas.length / this.itensPorPagina
+    );
     this.paginas = Array.from({ length: this.totalPaginas }, (_, i) => i + 1);
     this.paginaAtual = 1;
     this.atualizarPaginacao();
@@ -57,6 +77,7 @@ export class ListaComponent implements OnInit  {
     const inicio = (this.paginaAtual - 1) * this.itensPorPagina;
     const fim = inicio + this.itensPorPagina;
     this.empresasPaginadas = this.empresasFiltradas.slice(inicio, fim);
+    console.log('Empresas paginadas:', this.empresasPaginadas);
   }
 
   anteriorPagina(): void {
@@ -91,16 +112,20 @@ export class ListaComponent implements OnInit  {
   }
 
   deletar(empresa: any) {
-    if (confirm(`Tem certeza que deseja excluir a empresa ${empresa.nomeFantasia}?`)) {
+    if (
+      confirm(
+        `Tem certeza que deseja excluir a empresa ${empresa.nomeFantasia}?`
+      )
+    ) {
       this.empresaService.deletar(empresa.id).subscribe({
         next: () => {
-          this.empresas = this.empresas.filter(e => e.id !== empresa.id);
+          this.empresas = this.empresas.filter((e) => e.id !== empresa.id);
           this.aplicarFiltro();
         },
         error: (error) => {
           console.error('Erro ao excluir empresa:', error);
           alert(`Erro ao excluir empresa: ${error.message || error}`);
-        }
+        },
       });
     }
   }
@@ -122,12 +147,19 @@ export class ListaComponent implements OnInit  {
     this.fornecedorSelecionado = fornecedor;
     this.modalAberto = true;
   }
-  
+
   fecharModal() {
     this.modalAberto = false;
   }
 
-
+  // Função no template
+  capitalizarNome(nome: string): string {
+    return capitalizarNome(nome); // Chama a função importada
+  }
+  formatarRg(rg: string): string {
+    return formatarRg(rg);
+  }
+  ehPessoaJuridica(cpfCnpj: string): boolean {
+    return cpfCnpj?.replace(/\D/g, '').length === 14;
+  }
 }
-
-

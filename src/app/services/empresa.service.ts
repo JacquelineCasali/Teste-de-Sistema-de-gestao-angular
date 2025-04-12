@@ -33,10 +33,10 @@ export class EmpresaService {
     return this.http.put<any>(`${this.apiUrl}/${id}`, empresa);
   }
 
-  deletar(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
-  }
 
+  deletar(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`, { responseType: 'text' });
+  }
   getFornecedores(): Observable<any[]> {
     return this.http.get<any[]>(this.fornecedorUrl);
   }

@@ -115,7 +115,7 @@ fornecedorId: number | null = null;
                 rg: data.rg,
                 dataNascimento: data.dataNascimento,
                 cidade: data.cidade,
-                uf: data.uf,
+                uf: data.estado,
                 empresaIds: data.empresas.map((e: any) => e.id)
               };
               this.cidadeUfVisivel = true;

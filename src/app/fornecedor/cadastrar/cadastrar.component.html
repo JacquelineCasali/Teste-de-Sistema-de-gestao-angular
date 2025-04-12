@@ -1,94 +1,105 @@
+<h2>{{ editando ? "Editar Fornecedor" : "Cadastrar Fornecedor" }}</h2>
 
-<h2>{{ editando ? 'Editar Fornecedor' : 'Cadastrar Fornecedor' }}</h2>
-
-<form  #form="ngForm" (ngSubmit)="cadastrar()">
+<form #form="ngForm" (ngSubmit)="cadastrar()">
   <label>CPF/CNPJ:</label>
-  <input [(ngModel)]="fornecedor.cpfCnpj" name="cpfCnpj"
-         required
-         (blur)="onCpfCnpjChange()"
-         maxlength="18" (input)="onCpfCnpjChange()"
-         placeholder="Digite o CPF ou CNPJ"
-         />
-
-
-
-
-
+  <input
+    [(ngModel)]="fornecedor.cpfCnpj"
+    name="cpfCnpj"
+    required
+    (blur)="onCpfCnpjChange()"
+    maxlength="18"
+    (input)="onCpfCnpjChange()"
+    placeholder="Digite o CPF ou CNPJ"
+  />
 
   <label>Nome:</label>
 
-  <input type="text" name="nome" [(ngModel)]="fornecedor.nome" 
-  placeholder="Digite o nome da empresa"
-  required />
+  <input
+    type="text"
+    name="nome"
+    [(ngModel)]="fornecedor.nome"
+    placeholder="Digite o nome da empresa"
+    required
+  />
   <div *ngIf="form.submitted && !fornecedor.nome" class="erro">
     Nome é obrigatório.
   </div>
 
-
   <label>E-mail:</label>
-  <input [(ngModel)]="fornecedor.email" name="email" 
-  placeholder="tests@test.com"
-  required type="email" />
+  <input
+    [(ngModel)]="fornecedor.email"
+    name="email"
+    placeholder="tests@test.com"
+    required
+    type="email"
+  />
 
   <label>CEP:</label>
-  <input [(ngModel)]="fornecedor.cep" 
-  mask="00000-000"
-  name="cep" (blur)="buscarEnderecoPorCep(fornecedor.cep)"
-  placeholder="00000-000" />
-  
+  <input
+    [(ngModel)]="fornecedor.cep"
+    mask="00000-000"
+    name="cep"
+    (blur)="buscarEnderecoPorCep(fornecedor.cep)"
+    placeholder="00000-000"
+  />
+
   <div *ngIf="cidadeUfVisivel" class="cidade-uf-container">
     <div class="input-group">
       <label>Cidade:</label>
-      <input [(ngModel)]="fornecedor.cidade" name="cidade" placeholder="Cidade" readonly />
+      <input
+        [(ngModel)]="fornecedor.cidade"
+        name="cidade"
+        placeholder="Cidade"
+        readonly
+      />
     </div>
-  
+
     <div class="input-group">
       <label>Estado:</label>
       <input [(ngModel)]="fornecedor.uf" name="uf" placeholder="UF" readonly />
     </div>
   </div>
 
-
-  
-
-  <div *ngIf="isPessoaFisica()"  class="rg-nascimento-container">
+  <div *ngIf="isPessoaFisica()" class="rg-nascimento-container">
     <div class="input-group">
-    <label>RG:</label>
-    <input [(ngModel)]="fornecedor.rg" name="rg" required mask="00.000.000-0" />
-
-   </div>
-   <div class="input-group">
-    <label>Data de Nascimento:</label>
-    <input [(ngModel)]="fornecedor.dataNascimento" name="dataNascimento" required type="date" />
-   </div>
-   
+      <label>RG:</label>
+      <input
+        [(ngModel)]="fornecedor.rg"
+        name="rg"
+        required
+        mask="00.000.000-0"
+      />
+    </div>
+    <div class="input-group">
+      <label>Data de Nascimento:</label>
+      <input
+        [(ngModel)]="fornecedor.dataNascimento"
+        name="dataNascimento"
+        required
+        type="date"
+      />
+    </div>
   </div>
 
-
   <label>Associe uma Empresa:</label>
-<div class="link">
-
-
-  <div *ngFor="let emp of empresas" class="empresa-checkbox">
-     <label >
-    <input
-   style="width: 20px;"
-    type="checkbox"
-           [value]="emp.id"
-           (change)="toggleEmpresa(emp.id, $event)" />
-    {{ emp.cnpj }} ({{ emp.estado }})
-  </label>
-
-</div>
- 
-   
-      
-      </div>
-      <a [routerLink]="['/empresas/cadastrar']" >Cadastrar Nova Empresa</a>  
-    
+  <div class="link">
+    <div *ngFor="let emp of empresas" class="empresa-checkbox">
+      <label>
+        <input
+        [checked]="fornecedor.empresaIds.includes(emp.id)"
+          style="width: 20px"
+          type="checkbox"
+          [value]="emp.id"
+          (change)="toggleEmpresa(emp.id, $event)"
+        />
+        {{ formatarCpfCnpj(emp.cnpj )}} ({{ emp.estado }})
+      </label>
+    </div>
+  </div>
+  <a [routerLink]="['/empresas/cadastrar']">Cadastrar Nova Empresa</a>
 
   <button type="submit">💾 Salvar</button>
- 
+
   <div *ngIf="mensagensErro.length" class="erro">
     <ul>
       <li *ngFor="let msg of mensagensErro">{{ msg }}</li>

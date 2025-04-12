@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FornecedorService } from '../../services/fornecedor.service';
 import { FormsModule } from '@angular/forms';
+import { capitalizarNome } from '../../shared/utils/utils';
 
 @Component({
   selector: 'app-lista-fornecedor',
@@ -149,6 +150,8 @@ export class ListaFornecedorComponent implements OnInit {
       : rg;
   }
 
-
+  capitalizarNome(nome: string): string {
+    return capitalizarNome(nome);  // Chama a função importada
+  }
 
 }

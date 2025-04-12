@@ -4,6 +4,7 @@ import { EmpresaService } from '../../services/empresa.service';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FornecedorService } from '../../services/fornecedor.service';
+import { capitalizarNome } from '../../shared/utils/utils';
 
 
 @Component({
@@ -123,6 +124,9 @@ export class EmpresaDetalheComponent implements OnInit {
       ? num.replace(/(\d{2})(\d{3})(\d{3})(\d{1})/, '$1.$2.$3-$4')
       : rg;
   }
+   capitalizarNome(nome: string): string {
+      return capitalizarNome(nome);  // Chama a função importada
+    }
 }
 
 

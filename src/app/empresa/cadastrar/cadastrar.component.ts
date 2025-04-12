@@ -89,12 +89,13 @@ if(id){
   carregarEmpresa(id: number) {
     this.empresaService.getEmpresaById(id).subscribe({
       next: (data) => {
-        this.  empresa = {          
+        console.log(data); // Verifique a resposta da API aqui
+        this. empresa = {          
           cnpj: this.formatarCnpj(data.cnpj),
           nomeFantasia:data.nomeFantasia,
           cep:this.formatarCep(data.cep) ,
           cidade:data.cidade,
-          uf: data.uf,
+          uf: data.estado,
           fornecedorIds: data.fornecedores.map((e: any) => e.id)
                
         };
@@ -109,14 +110,7 @@ if(id){
   cadastrar(): void {
     this.mensagemErro = '';
    
-    const empresaParaSalvar = {
-      ...this.empresa,
-      cnpj: this.empresa.cnpj.replace(/\D/g, ''),
-      cep: this.empresa.cep.replace(/\D/g, '')
-    };
-  
-    console.log('Empresa a ser enviada:', empresaParaSalvar);
-    console.log('Payload enviado ao back-end:', JSON.stringify(empresaParaSalvar, null, 2))
+   
     const requisicao = this.editando && this.empresaId
     ? this.empresaService.atualizarEmpresa(this.empresaId, this.empresa)
     : this.empresaService.criarEmpresa(this.empresa);

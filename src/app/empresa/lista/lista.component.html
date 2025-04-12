@@ -4,7 +4,7 @@
     type="text"
     placeholder="Filtrar por nome ou CNPJ"
     [(ngModel)]="filtro"
-    (input)="aplicarFiltro()"
+    (ngModelChange)="aplicarFiltro()"
     name="filtro"
   />
   <button class="cadastrar" (click)="cadastrar()">➕ Cadastrar Empresa</button>
@@ -25,7 +25,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let empresa of empresasPaginadas">
-        <td>{{ empresa.nomeFantasia }}</td>
+        <td>{{capitalizarNome(empresa.nomeFantasia )}}</td>
         <td>{{ formatarCnpj(empresa.cnpj) }}</td>
         <td>{{ formatarCep(empresa.cep) }}</td>
         <td>{{ empresa.cidade }}</td>
@@ -43,7 +43,7 @@
               (click)="abrirModalFornecedor(fornecedores)"
                 style="text-decoration: none; color: blue; cursor: pointer;"
               >
-                {{ fornecedores.nome }}
+                {{capitalizarNome( fornecedores.nome) }}
               </a>
             </li>
           </ul>
@@ -94,8 +94,26 @@
       <p><strong>CPF/CNPJ:</strong> {{ fornecedorSelecionado?.cpfCnpj }}</p>
       <p><strong>Email:</strong> {{ fornecedorSelecionado?.email }}</p>
       <p><strong>CEP:</strong> {{ fornecedorSelecionado?.cep }}</p>
-      <p><strong>RG:</strong> {{ fornecedorSelecionado?.rg }}</p>
-      <p><strong>Data de Nascimento:</strong> {{ formatarData(fornecedorSelecionado?.dataNascimento) }}</p>
+      <p><strong>RG:</strong>
+        {{
+          ehPessoaJuridica(fornecedorSelecionado?.cpfCnpj)
+            ? "Pessoa Jurídica"
+            : formatarRg(fornecedorSelecionado?.rg || '')
+        }}
+        
+      </p>
+      <p>
+        <strong>Data Nascimento:</strong>
+        {{
+          ehPessoaJuridica(fornecedorSelecionado?.cpfCnpj)
+            ? "Pessoa Jurídica"
+            : formatarData(fornecedorSelecionado?.dataNascimento|| '')
+        }}
+  
+       
+      </p>
+    
+
     </div>
   </div>
 </div>

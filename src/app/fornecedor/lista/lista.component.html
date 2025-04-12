@@ -30,7 +30,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let fornecedor of fornecedoresPaginados">
-        <td>{{ fornecedor.nome }}</td>
+        <td>{{capitalizarNome(fornecedor.nome)  }}</td>
         <td>{{ formatarCpfCnpj(fornecedor.cpfCnpj) }}</td>
         <td>{{ fornecedor.email }}</td>
         <td>{{ formatarCep(fornecedor.cep) }}</td>
@@ -64,7 +64,7 @@
                 [routerLink]="['/empresas', empresas.id]"
                 style="text-decoration: none; color: blue"
               >
-                {{ empresas.nomeFantasia }}
+                {{capitalizarNome( empresas.nomeFantasia) }}
               </a>
             </li>
           </ul>
@@ -94,24 +94,38 @@
   <div class="modal-conteudo">
     <span class="fechar" (click)="fecharModal()">&times;</span>
     <h3>Detalhes do Fornecedor</h3>
-    <p><strong>Nome:</strong> {{ fornecedorSelecionado?.nome }}</p>
-    <p><strong>CPF/CNPJ:</strong> {{ fornecedorSelecionado?.cpfCnpj }}</p>
+    <p><strong>Nome:</strong> {{capitalizarNome(fornecedorSelecionado?.nome)  }}</p>
+    <p><strong>CPF/CNPJ:</strong> {{ formatarCpfCnpj(fornecedorSelecionado?.cpfCnpj|| '') }}</p>
     <p><strong>Email:</strong> {{ fornecedorSelecionado?.email }}</p>
     <p><strong>CEP:</strong> {{ fornecedorSelecionado?.cep }}</p>
-    <p><strong>RG:</strong> {{ fornecedorSelecionado?.rg }}</p>
+   
+    <p><strong>RG:</strong>
+      {{
+        ehPessoaJuridica(fornecedorSelecionado?.cpfCnpj)
+          ? "Pessoa Jurídica"
+          : formatarRg(fornecedorSelecionado?.rg || '')
+      }}
+      
+    </p>
     <p>
       <strong>Data Nascimento:</strong>
-      {{ formatarData(fornecedorSelecionado?.dataNascimento) }}
+      {{
+        ehPessoaJuridica(fornecedorSelecionado?.cpfCnpj)
+          ? "Pessoa Jurídica"
+          : formatarData(fornecedorSelecionado?.dataNascimento|| '')
+      }}
+
+     
     </p>
     <p><strong>Empresas:</strong></p>
     <ul
       *ngIf="fornecedorSelecionado?.empresas?.length > 0; else semEmpresasModal"
     >
       <li *ngFor="let emp of fornecedorSelecionado?.empresas">
-        <strong>{{ emp.nomeFantasia }}</strong>
+        <strong>{{capitalizarNome(emp.nomeFantasia)  }}</strong>
 
-        <p style="margin: 10px 0">CNPJ: {{ emp.cnpj }}</p>
-        <p style="margin: 10px 0">CEP: {{ emp.cep }}</p>
+        <p style="margin: 10px 0">CNPJ: {{formatarCpfCnpj(emp.cnpj)  }}</p>
+        <p style="margin: 10px 0">CEP: {{formatarCep(emp.cep)  }}</p>
         <p style="margin: 0">Estado: {{ emp.estado }}</p>
       </li>
     </ul>
